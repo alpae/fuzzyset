@@ -2,7 +2,7 @@ import re
 import math
 import operator
 import collections
-from rapidfuzz.string_metric import normalized_levenshtein
+import Levenshtein
 
 __version__ = "0.1.1"
 __version_info__ = tuple(__version__.split("."))
@@ -99,7 +99,11 @@ class FuzzySet(object):
 
 
 def _distance(str1, str2):
-    return normalized_levenshtein(str1, str2)/100
+    distance = Levenshtein.distance(str1, str2)
+    if len(str1) > len(str2):
+        return 1 - float(distance) / len(str1)
+    else:
+        return 1 - float(distance) / len(str2)
 
 
 def _gram_counter(value, gram_size=2):

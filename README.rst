@@ -22,7 +22,7 @@ by using either ``.get`` or ``[]``::
    >>> a.get("micael asiak")
    [(0.8461538461538461, u'michael axiak')]
 
-The result will be a list of ``(score, matched_value)`` tuples.
+The result will be a list of ``(score, mached_value)`` tuples.
 The score is between 0 and 1, with 1 being a perfect match.
 
 For roughly 15% performance increase, there is also a Cython-implemented
