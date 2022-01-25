@@ -1,7 +1,7 @@
 import os.path
 import gzip
 import unittest
-import Levenshtein
+import rapidfuzz
 from fuzzyset import FuzzySet
 from cfuzzyset import cFuzzySet
 
@@ -29,7 +29,7 @@ class FuzzySetTests(unittest.TestCase):
         self.assertGreaterEqual(2, len(res))
         self.assertGreaterEqual(res[-1][0], 0.9*res[0][0])
         for x in res:
-            self.assertAlmostEqual(x[0], 1-(Levenshtein.distance(query, x[1])/max(len(query), len(x[1]))))
+            self.assertAlmostEqual(x[0], 1-(rapidfuzz.string_metric.levenshtein(query, x[1])/max(len(query), len(x[1]))))
 
 
 class CFuzzySetTests(FuzzySetTests):
