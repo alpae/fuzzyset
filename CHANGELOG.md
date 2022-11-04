@@ -2,6 +2,7 @@
 ### [0.2.1] - 2022-11-04
 - build wheels for python 3.11
 - update cython generated c-code
+- extend / update CI/CD pipeline
 
 ### [0.2.0] - 2022-01-25
 - replaced unmaintained python-Levenshtein library with rapidfuzz
