@@ -4,7 +4,7 @@ import operator
 import collections
 from rapidfuzz.string_metric import normalized_levenshtein
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 __version_info__ = tuple(__version__.split("."))
 
 _non_word_re = re.compile(r'[^\w, ]+')
