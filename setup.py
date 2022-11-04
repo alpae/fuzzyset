@@ -58,9 +58,10 @@ setup(
     long_description=read('README.rst'),
     long_description_content_type="text/x-rst",
     install_requires=['rapidfuzz'],
+    python_requires=">=3.6",
     test_require=["texttable", "pytest"],
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 5 - Production/Stable",
         "License :: OSI Approved :: BSD License",
         'Operating System :: OS Independent',
         'Programming Language :: Python',
