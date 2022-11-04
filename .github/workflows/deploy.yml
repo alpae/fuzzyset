@@ -119,7 +119,7 @@ jobs:
       run: python -m build --sdist
 
     - name: Stage artifacts
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
 
     - name: collect all wheels in single dist/ folder
       run: mv dist-*/*whl dist/
