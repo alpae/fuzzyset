@@ -5,7 +5,7 @@ import math
 import cython
 import operator
 import collections
-import rapidfuzz
+from rapidfuzz.distance import Levenshtein
 
 __version__ = (0, 0, 18)
 
@@ -229,5 +229,5 @@ cdef unicode _convert_val(object value):
         raise TypeError("Expecting string or unicode, received " + value)
 
 cdef double distance(unicode str1, unicode str2):
-    cdef double result = rapidfuzz.string_metric.normalized_levenshtein(str1, str2) / 100
+    cdef double result = Levenshtein.normalized_similarity(str1, str2)
     return result;

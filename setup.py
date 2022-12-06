@@ -57,9 +57,9 @@ setup(
     packages=['fuzzyset'],
     long_description=read('README.rst'),
     long_description_content_type="text/x-rst",
-    install_requires=['rapidfuzz'],
+    install_requires=['rapidfuzz>=2.0'],
     python_requires=">=3.6",
-    test_require=["texttable", "pytest"],
+    extra_require={"test": ["texttable", "pytest"]},
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "License :: OSI Approved :: BSD License",

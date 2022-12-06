@@ -1484,6 +1484,9 @@ static int __Pyx_SetVtable(PyObject *dict, void *vtable);
 /* Import.proto */
 static PyObject *__Pyx_Import(PyObject *name, PyObject *from_list, int level);
 
+/* ImportFrom.proto */
+static PyObject* __Pyx_ImportFrom(PyObject* module, PyObject* name);
+
 /* CLineInTraceback.proto */
 #ifdef CYTHON_CLINE_IN_TRACEBACK
 #define __Pyx_CLineForTraceback(tstate, c_line)  (((CYTHON_CLINE_IN_TRACEBACK)) ? c_line : 0)
@@ -1604,24 +1607,25 @@ static const char __pyx_k_cFuzzySet[] = "cFuzzySet";
 static const char __pyx_k_cfuzzyset[] = "cfuzzyset";
 static const char __pyx_k_exact_set[] = "exact_set";
 static const char __pyx_k_gram_size[] = "gram_size";
-static const char __pyx_k_rapidfuzz[] = "rapidfuzz";
 static const char __pyx_k_itemgetter[] = "itemgetter";
 static const char __pyx_k_match_dict[] = "match_dict";
 static const char __pyx_k_pyx_vtable[] = "__pyx_vtable__";
+static const char __pyx_k_Levenshtein[] = "Levenshtein";
 static const char __pyx_k_collections[] = "collections";
-static const char __pyx_k_string_metric[] = "string_metric";
 static const char __pyx_k_pickle_creator[] = "_pickle_creator";
 static const char __pyx_k_rel_sim_cutoff[] = "rel_sim_cutoff";
 static const char __pyx_k_gram_size_lower[] = "gram_size_lower";
 static const char __pyx_k_gram_size_upper[] = "gram_size_upper";
 static const char __pyx_k_use_levenshtein[] = "use_levenshtein";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
+static const char __pyx_k_rapidfuzz_distance[] = "rapidfuzz.distance";
+static const char __pyx_k_normalized_similarity[] = "normalized_similarity";
 static const char __pyx_k_fuzzyset_cfuzzyset_pyx[] = "fuzzyset/cfuzzyset.pyx";
-static const char __pyx_k_normalized_levenshtein[] = "normalized_levenshtein";
 static const char __pyx_k_Expecting_string_or_unicode_rece[] = "Expecting string or unicode, received ";
 static PyObject *__pyx_kp_u_;
 static PyObject *__pyx_kp_s_Expecting_string_or_unicode_rece;
 static PyObject *__pyx_n_s_KeyError;
+static PyObject *__pyx_n_s_Levenshtein;
 static PyObject *__pyx_n_s_TypeError;
 static PyObject *__pyx_kp_s__2;
 static PyObject *__pyx_kp_u__7;
@@ -1650,18 +1654,17 @@ static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_match_dict;
 static PyObject *__pyx_n_s_math;
 static PyObject *__pyx_n_s_name;
-static PyObject *__pyx_n_s_normalized_levenshtein;
+static PyObject *__pyx_n_s_normalized_similarity;
 static PyObject *__pyx_n_s_operator;
 static PyObject *__pyx_n_s_pickle_creator;
 static PyObject *__pyx_n_s_pyx_vtable;
 static PyObject *__pyx_n_s_range;
-static PyObject *__pyx_n_s_rapidfuzz;
+static PyObject *__pyx_n_s_rapidfuzz_distance;
 static PyObject *__pyx_n_s_re;
 static PyObject *__pyx_n_s_rel_sim_cutoff;
 static PyObject *__pyx_n_s_result;
 static PyObject *__pyx_n_s_reverse;
 static PyObject *__pyx_n_s_sort;
-static PyObject *__pyx_n_s_string_metric;
 static PyObject *__pyx_n_s_sub;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_use_levenshtein;
@@ -1685,7 +1688,6 @@ static __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_values = {0, &__pyx_n_s_v
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
 static PyObject *__pyx_int_18;
-static PyObject *__pyx_int_100;
 static PyObject *__pyx_tuple__3;
 static PyObject *__pyx_tuple__4;
 static PyObject *__pyx_tuple__5;
@@ -5995,7 +5997,7 @@ static PyObject *__pyx_f_9cfuzzyset__convert_val(PyObject *__pyx_v_value) {
  *         raise TypeError("Expecting string or unicode, received " + value)
  * 
  * cdef double distance(unicode str1, unicode str2):             # <<<<<<<<<<<<<<
- *     cdef double result = rapidfuzz.string_metric.normalized_levenshtein(str1, str2) / 100
+ *     cdef double result = Levenshtein.normalized_similarity(str1, str2)
  *     return result;
  */
 
@@ -6017,50 +6019,47 @@ static double __pyx_f_9cfuzzyset_distance(PyObject *__pyx_v_str1, PyObject *__py
   /* "cfuzzyset.pyx":232
  * 
  * cdef double distance(unicode str1, unicode str2):
- *     cdef double result = rapidfuzz.string_metric.normalized_levenshtein(str1, str2) / 100             # <<<<<<<<<<<<<<
+ *     cdef double result = Levenshtein.normalized_similarity(str1, str2)             # <<<<<<<<<<<<<<
  *     return result;
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_rapidfuzz); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 232, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_Levenshtein); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 232, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_string_metric); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 232, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_normalized_similarity); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 232, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_normalized_levenshtein); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 232, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = NULL;
+  __pyx_t_2 = NULL;
   __pyx_t_4 = 0;
-  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
-    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
-    if (likely(__pyx_t_3)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_3);
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
+    if (likely(__pyx_t_2)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+      __Pyx_INCREF(__pyx_t_2);
       __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_2, function);
+      __Pyx_DECREF_SET(__pyx_t_3, function);
       __pyx_t_4 = 1;
     }
   }
   #if CYTHON_FAST_PYCALL
-  if (PyFunction_Check(__pyx_t_2)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_str1, __pyx_v_str2};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 232, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (PyFunction_Check(__pyx_t_3)) {
+    PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_v_str1, __pyx_v_str2};
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 232, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else
   #endif
   #if CYTHON_FAST_PYCCALL
-  if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_str1, __pyx_v_str2};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 232, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
+    PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_v_str1, __pyx_v_str2};
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 232, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else
   #endif
   {
     __pyx_t_5 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 232, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    if (__pyx_t_3) {
-      __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3); __pyx_t_3 = NULL;
+    if (__pyx_t_2) {
+      __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_2); __pyx_t_2 = NULL;
     }
     __Pyx_INCREF(__pyx_v_str1);
     __Pyx_GIVEREF(__pyx_v_str1);
@@ -6068,21 +6067,18 @@ static double __pyx_f_9cfuzzyset_distance(PyObject *__pyx_v_str1, PyObject *__py
     __Pyx_INCREF(__pyx_v_str2);
     __Pyx_GIVEREF(__pyx_v_str2);
     PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_4, __pyx_v_str2);
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 232, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 232, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_int_100); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 232, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 232, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 232, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_result = __pyx_t_6;
 
   /* "cfuzzyset.pyx":233
  * cdef double distance(unicode str1, unicode str2):
- *     cdef double result = rapidfuzz.string_metric.normalized_levenshtein(str1, str2) / 100
+ *     cdef double result = Levenshtein.normalized_similarity(str1, str2)
  *     return result;             # <<<<<<<<<<<<<<
  */
   __pyx_r = __pyx_v_result;
@@ -6092,7 +6088,7 @@ static double __pyx_f_9cfuzzyset_distance(PyObject *__pyx_v_str1, PyObject *__py
  *         raise TypeError("Expecting string or unicode, received " + value)
  * 
  * cdef double distance(unicode str1, unicode str2):             # <<<<<<<<<<<<<<
- *     cdef double result = rapidfuzz.string_metric.normalized_levenshtein(str1, str2) / 100
+ *     cdef double result = Levenshtein.normalized_similarity(str1, str2)
  *     return result;
  */
 
@@ -6393,6 +6389,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_u_, __pyx_k_, sizeof(__pyx_k_), 0, 1, 0, 0},
   {&__pyx_kp_s_Expecting_string_or_unicode_rece, __pyx_k_Expecting_string_or_unicode_rece, sizeof(__pyx_k_Expecting_string_or_unicode_rece), 0, 0, 1, 0},
   {&__pyx_n_s_KeyError, __pyx_k_KeyError, sizeof(__pyx_k_KeyError), 0, 0, 1, 1},
+  {&__pyx_n_s_Levenshtein, __pyx_k_Levenshtein, sizeof(__pyx_k_Levenshtein), 0, 0, 1, 1},
   {&__pyx_n_s_TypeError, __pyx_k_TypeError, sizeof(__pyx_k_TypeError), 0, 0, 1, 1},
   {&__pyx_kp_s__2, __pyx_k__2, sizeof(__pyx_k__2), 0, 0, 1, 0},
   {&__pyx_kp_u__7, __pyx_k__7, sizeof(__pyx_k__7), 0, 1, 0, 0},
@@ -6421,18 +6418,17 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_match_dict, __pyx_k_match_dict, sizeof(__pyx_k_match_dict), 0, 0, 1, 1},
   {&__pyx_n_s_math, __pyx_k_math, sizeof(__pyx_k_math), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
-  {&__pyx_n_s_normalized_levenshtein, __pyx_k_normalized_levenshtein, sizeof(__pyx_k_normalized_levenshtein), 0, 0, 1, 1},
+  {&__pyx_n_s_normalized_similarity, __pyx_k_normalized_similarity, sizeof(__pyx_k_normalized_similarity), 0, 0, 1, 1},
   {&__pyx_n_s_operator, __pyx_k_operator, sizeof(__pyx_k_operator), 0, 0, 1, 1},
   {&__pyx_n_s_pickle_creator, __pyx_k_pickle_creator, sizeof(__pyx_k_pickle_creator), 0, 0, 1, 1},
   {&__pyx_n_s_pyx_vtable, __pyx_k_pyx_vtable, sizeof(__pyx_k_pyx_vtable), 0, 0, 1, 1},
   {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
-  {&__pyx_n_s_rapidfuzz, __pyx_k_rapidfuzz, sizeof(__pyx_k_rapidfuzz), 0, 0, 1, 1},
+  {&__pyx_n_s_rapidfuzz_distance, __pyx_k_rapidfuzz_distance, sizeof(__pyx_k_rapidfuzz_distance), 0, 0, 1, 1},
   {&__pyx_n_s_re, __pyx_k_re, sizeof(__pyx_k_re), 0, 0, 1, 1},
   {&__pyx_n_s_rel_sim_cutoff, __pyx_k_rel_sim_cutoff, sizeof(__pyx_k_rel_sim_cutoff), 0, 0, 1, 1},
   {&__pyx_n_s_result, __pyx_k_result, sizeof(__pyx_k_result), 0, 0, 1, 1},
   {&__pyx_n_s_reverse, __pyx_k_reverse, sizeof(__pyx_k_reverse), 0, 0, 1, 1},
   {&__pyx_n_s_sort, __pyx_k_sort, sizeof(__pyx_k_sort), 0, 0, 1, 1},
-  {&__pyx_n_s_string_metric, __pyx_k_string_metric, sizeof(__pyx_k_string_metric), 0, 0, 1, 1},
   {&__pyx_n_s_sub, __pyx_k_sub, sizeof(__pyx_k_sub), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   {&__pyx_n_s_use_levenshtein, __pyx_k_use_levenshtein, sizeof(__pyx_k_use_levenshtein), 0, 0, 1, 1},
@@ -6456,7 +6452,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
   /* "cfuzzyset.pyx":10
- * import rapidfuzz
+ * from rapidfuzz.distance import Levenshtein
  * 
  * __version__ = (0, 0, 18)             # <<<<<<<<<<<<<<
  * 
@@ -6502,7 +6498,6 @@ static CYTHON_SMALL_CODE int __Pyx_InitGlobals(void) {
   __pyx_int_0 = PyInt_FromLong(0); if (unlikely(!__pyx_int_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_18 = PyInt_FromLong(18); if (unlikely(!__pyx_int_18)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_int_100 = PyInt_FromLong(100); if (unlikely(!__pyx_int_100)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -6823,7 +6818,7 @@ if (!__Pyx_RefNanny) {
  * import cython
  * import operator             # <<<<<<<<<<<<<<
  * import collections
- * import rapidfuzz
+ * from rapidfuzz.distance import Levenshtein
  */
   __pyx_t_1 = __Pyx_Import(__pyx_n_s_operator, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 6, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -6834,7 +6829,7 @@ if (!__Pyx_RefNanny) {
  * import cython
  * import operator
  * import collections             # <<<<<<<<<<<<<<
- * import rapidfuzz
+ * from rapidfuzz.distance import Levenshtein
  * 
  */
   __pyx_t_1 = __Pyx_Import(__pyx_n_s_collections, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 7, __pyx_L1_error)
@@ -6845,17 +6840,26 @@ if (!__Pyx_RefNanny) {
   /* "cfuzzyset.pyx":8
  * import operator
  * import collections
- * import rapidfuzz             # <<<<<<<<<<<<<<
+ * from rapidfuzz.distance import Levenshtein             # <<<<<<<<<<<<<<
  * 
  * __version__ = (0, 0, 18)
  */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_rapidfuzz, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_rapidfuzz, __pyx_t_1) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
+  __Pyx_INCREF(__pyx_n_s_Levenshtein);
+  __Pyx_GIVEREF(__pyx_n_s_Levenshtein);
+  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_Levenshtein);
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_rapidfuzz_distance, __pyx_t_1, -1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_Levenshtein); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Levenshtein, __pyx_t_1) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "cfuzzyset.pyx":10
- * import rapidfuzz
+ * from rapidfuzz.distance import Levenshtein
  * 
  * __version__ = (0, 0, 18)             # <<<<<<<<<<<<<<
  * 
@@ -6870,18 +6874,18 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_re); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_compile); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 14, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_re); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_compile); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 14, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_XGOTREF(__pyx_v_9cfuzzyset__non_word_re);
-  __Pyx_DECREF_SET(__pyx_v_9cfuzzyset__non_word_re, __pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_1);
-  __pyx_t_1 = 0;
+  __Pyx_DECREF_SET(__pyx_v_9cfuzzyset__non_word_re, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
 
   /* "cfuzzyset.pyx":179
  * 
@@ -6890,10 +6894,10 @@ if (!__Pyx_RefNanny) {
  *                     match_dict,
  *                     items,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9cfuzzyset_1_pickle_creator, NULL, __pyx_n_s_cfuzzyset); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 179, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pickle_creator, __pyx_t_1) < 0) __PYX_ERR(0, 179, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_9cfuzzyset_1_pickle_creator, NULL, __pyx_n_s_cfuzzyset); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 179, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pickle_creator, __pyx_t_2) < 0) __PYX_ERR(0, 179, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "cfuzzyset.pyx":207
  *     return results
@@ -6912,10 +6916,10 @@ if (!__Pyx_RefNanny) {
  * 
  * import re
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /*--- Wrapped vars code ---*/
 
@@ -8635,6 +8639,20 @@ bad:
     Py_XDECREF(empty_list);
     Py_XDECREF(empty_dict);
     return module;
+}
+
+/* ImportFrom */
+static PyObject* __Pyx_ImportFrom(PyObject* module, PyObject* name) {
+    PyObject* value = __Pyx_PyObject_GetAttrStr(module, name);
+    if (unlikely(!value) && PyErr_ExceptionMatches(PyExc_AttributeError)) {
+        PyErr_Format(PyExc_ImportError,
+        #if PY_MAJOR_VERSION < 3
+            "cannot import name %.230s", PyString_AS_STRING(name));
+        #else
+            "cannot import name %S", name);
+        #endif
+    }
+    return value;
 }
 
 /* CLineInTraceback */
