@@ -1,4 +1,8 @@
 ## Changelog
+### [Dev]
+- update rapidfuzz >= 2.0
+- drop support for python <=3.6
+
 ### [0.2.1] - 2022-11-04
 - build wheels for python 3.11
 - update cython generated c-code
