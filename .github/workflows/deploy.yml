@@ -125,7 +125,7 @@ jobs:
       run: mv dist-*/*whl dist/
 
     - name: Upload with twine
-      uses: pypa/gh-action-pypi-publish@5d1679fa6b895587c6eb10c3fe82205b440a580e
+      uses: pypa/gh-action-pypi-publish@c7f29f7adef1a245bd91520e94867e5c6eedddcc
       with:
         user: ${{ secrets.TWINE_USERNAME }}
         password: ${{ secrets.TWINE_PASSWORD }}
