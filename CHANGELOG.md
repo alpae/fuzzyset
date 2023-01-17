@@ -1,5 +1,6 @@
 ## Changelog
-### [Dev]
+### [0.2.2] - 2023-01-17
+- build arm64 wheels for macosx
 - update rapidfuzz >= 2.0
 - drop support for python <=3.6
 
