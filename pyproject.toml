@@ -1,0 +1,33 @@
+[build-system]
+requires = [
+    # setuptools, wheel and Cython are needed for the setup.py based build
+    "setuptools>=59.2.0",
+    "wheel>=0.37.0",
+    "Cython>=0.29.30,<3.0",
+]
+build-backend = "setuptools.build_meta"
+
+
+[tool.cibuildwheel]
+skip = "cp36-* pp37-* *-manylinux_i686 *_ppc64le *_s390x *-musllinux*"
+build-verbosity = "3"
+before-test = "pip install pytest"
+test-command = "pytest {project}/tests"
+
+[tool.cibuildwheel.linux]
+manylinux-x86_64-image = "manylinux2014"
+manylinux-aarch64-image = "manylinux2014"
+environment = { CFLAGS="-std=c99 -fno-strict-aliasing", LDFLAGS="-Wl,--strip-debug", OPENBLAS64_="/usr/local", NPY_USE_BLAS_ILP64="1", RUNNER_OS="Linux" }
+
+[tool.cibuildwheel.macos]
+archs = "x86_64 arm64"
+test-skip = "*_arm64 *_universal2:arm64"
+# MACOS linker doesn't support stripping symbols
+environment = { CFLAGS="-std=c99 -fno-strict-aliasing", OPENBLAS64_="/usr/local", NPY_USE_BLAS_ILP64="1", CC="clang", CXX = "clang++" }
+
+[tool.cibuildwheel.windows]
+environment = { OPENBLAS64_="openblas", OPENBLAS="", NPY_USE_BLAS_ILP64="1", CFLAGS="", LDFLAGS="" }
+
+[[tool.cibuildwheel.overrides]]
+select = "*-win32"
+environment = { OPENBLAS64_="", OPENBLAS="openblas", NPY_USE_BLAS_ILP64="0", CFLAGS="-m32", LDFLAGS="-m32" }
