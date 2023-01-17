@@ -56,7 +56,6 @@ jobs:
 
     - uses: actions/upload-artifact@v3
       with:
-        name: ${{ matrix.python }}-${{ startsWith(matrix.buildplat[1], 'macosx') && 'macosx' || matrix.buildplat[1] }}
         path: ./wheelhouse/*.whl
 
   build-sdist:
@@ -93,8 +92,7 @@ jobs:
         twine check dist/*
     - uses: actions/upload-artifact@v3
       with:
-        name: sdist
-        path: ./dist/*
+        path: ./dist/*.tar.gz
 
   upload:
     needs: [build-wheels, build-sdist]
@@ -112,12 +110,13 @@ jobs:
     - name: Stage artifacts
       uses: actions/download-artifact@v3
 
-    - name: collect all wheels in single dist/ folder
-      run: mv dist-*/*whl dist/
+    - name: List all artifacts
+      run: ls -R
 
     - name: Upload with twine
       uses: pypa/gh-action-pypi-publish@v1.6.4
       with:
         user: ${{ secrets.TWINE_USERNAME }}
         password: ${{ secrets.TWINE_PASSWORD }}
+        packages_dir: artifact/
 
