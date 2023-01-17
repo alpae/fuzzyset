@@ -3,7 +3,7 @@ import math
 import operator
 import collections
 from rapidfuzz.distance import Levenshtein
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 __version_info__ = tuple(__version__.split("."))
 
 _non_word_re = re.compile(r'[^\w, ]+')
