@@ -28,7 +28,7 @@ jobs:
           - [macos-12, macosx_*]
           - [windows-2019, win_amd64]
           - [windows-2019, win32]
-        python: ["cp37", "cp38", "cp39", "cp310", "cp311"]
+        python: ["cp38", "cp39", "cp310", "cp311", "cp312"]
     env:
       IS_32_BIT: ${{ matrix.buildplat[1] == 'win32' }}
       IS_PUSH: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
