@@ -1,4 +1,11 @@
 ## Changelog
+
+### [0.2.3] - 2024-03-05
+- add support to build wheels for py3.12 (macosx, win, linux)
+- drop support for py3.7 (EOL)
+- update ciwheelbuild from 2.12 to 2.16.5
+- bump version of actions to latest versions
+
 ### [0.2.2] - 2023-01-17
 - build arm64 wheels for macosx
 - update rapidfuzz >= 2.0
