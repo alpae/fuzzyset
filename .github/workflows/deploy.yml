@@ -54,7 +54,7 @@ jobs:
       env:
         CIBW_BUILD: ${{ matrix.python }}-${{ matrix.buildplat[1] }}
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         path: ./wheelhouse/*.whl
 
@@ -90,7 +90,7 @@ jobs:
     - name: Check README rendering for PyPI
       run: |
         twine check dist/*
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         path: ./dist/*.tar.gz
 
