@@ -54,8 +54,9 @@ jobs:
       env:
         CIBW_BUILD: ${{ matrix.python }}-${{ matrix.buildplat[1] }}
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
+        name: pypi-wheel-${{ matrix.python }}-${{ matrix.buildplat[0] }}-${{ strategy.job-index }}
         path: ./wheelhouse/*.whl
 
   build-sdist:
@@ -90,8 +91,9 @@ jobs:
     - name: Check README rendering for PyPI
       run: |
         twine check dist/*
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
+        name: pypi-src
         path: ./dist/*.tar.gz
 
   upload:
@@ -112,6 +114,10 @@ jobs:
 
     - name: Stage artifacts
       uses: actions/download-artifact@v4
+      with:
+        name: artifact
+        pattern: pypi-*
+        merge-multiple: true
 
     - name: List all artifacts
       run: ls -R
