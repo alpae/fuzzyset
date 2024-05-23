@@ -1,5 +1,10 @@
 ## Changelog
 
+### [0.2.4] - 2024-05-23
+- fixed inconsistency between cfuzzyset and fuzzyset implementation (#30)
+- update ciwheelbuild to 2.18.1 
+- bump version of actions to latest versions
+
 ### [0.2.3] - 2024-03-05
 - add support to build wheels for py3.12 (macosx, win, linux)
 - drop support for py3.7 (EOL)
