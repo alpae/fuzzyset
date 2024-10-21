@@ -1,5 +1,10 @@
 ## Changelog
 
+### [0.2.5] - 2024-10-21
+- update ciwheelbuild to 2.21.3
+- update Cython version in ciwheelbuild to >=3.0.0
+- build wheels for py3.13
+
 ### [0.2.4] - 2024-05-23
 - fixed inconsistency between cfuzzyset and fuzzyset implementation (#30)
 - update ciwheelbuild to 2.18.1 
