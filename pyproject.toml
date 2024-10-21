@@ -3,7 +3,7 @@ requires = [
     # setuptools, wheel and Cython are needed for the setup.py based build
     "setuptools>=59.2.0",
     "wheel>=0.37.0",
-    "Cython>=0.29.30,<3.0",
+    "Cython>=3.0",
 ]
 build-backend = "setuptools.build_meta"
 
